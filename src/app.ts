@@ -2,6 +2,8 @@ import express, { NextFunction, Request, Response } from "express";
 import cors from "cors";
 import { router } from "./routes";
 import httpStatus from "http-status-codes";
+import { envVars } from "./config/env";
+import { globalErrorHandler } from "./middlewares/globalErrorHandler";
 // route matching app.ts > router.ts > userRoute --> controller --> service --> model --> DB
 
 export const app = express();
@@ -24,20 +26,26 @@ app.get("/", (req: Request, res: Response) => {
   });
 });
 
+
 // global error handler (4 varaibles -> check error)
-// eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any
-app.use((err: any, req: Request, res: Response, next: NextFunction) => {
-  if (err) {
-    res.status(httpStatus.BAD_REQUEST).json({
-      message: `Something went wrong ${err.message}`,
-    });
-  }
-});
+app.use(globalErrorHandler);
+// app.use((err: any, req: Request, res: Response, next: NextFunction) => {
+//   if (err) {
+//     res.status(httpStatus.BAD_REQUEST).json({
+//       success: false,
+//       message: `Something went wrong ${err.message}`,
+//       err,
+//       stack: envVars.NODE_ENV === "Development" ? err.stack : null,
+//       // stack contains file detials where couses the error show only in dev.
+//     });
+//   }
+
 
 // not found route
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 app.use((req: Request, res: Response, next: NextFunction) => {
   res.status(httpStatus.NOT_FOUND).json({
+    success: false,
     message: "Route not found",
   });
 });
