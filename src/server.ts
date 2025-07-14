@@ -2,20 +2,20 @@
 import { Server } from "http";
 import mongoose from "mongoose";
 import { app } from "./app";
+import { envVars } from "./config/env";
 
 // type is from http
 let server: Server;
 
 const startServer = async () => {
   try {
+    console.log(envVars.NODE_ENV);
     // Connect to MongoDB using Mongoose
-    await mongoose.connect(
-      "mongodb+srv://todos_user:44332211@cluster0.xxfexvc.mongodb.net/tour-db?retryWrites=true&w=majority&appName=Cluster0"
-    );
+    await mongoose.connect(envVars.DB_URL);
     console.log("connecting to mongoDB");
 
     //  Start the server
-    server = app.listen(5000, () => {
+    server = app.listen(envVars.PORT, () => {
       console.log("server is running");
     });
   } catch (error) {
@@ -25,8 +25,6 @@ const startServer = async () => {
 
 // Call the function
 startServer();
-
-
 
 // 3 types error handling approach
 // unhandlled rejection error (a promise err due to not using trycatch)
@@ -58,7 +56,7 @@ process.on("uncaughtException", (err) => {
 });
 
 // 3. Signal termination error
-// ✅ reason = docker stop, kill, many cloud shutdowns  
+// ✅ reason = docker stop, kill, many cloud shutdowns
 process.on("SIGTERM", () => {
   console.log("SIGTERM signal recieved... Server shutting down..");
 
@@ -69,7 +67,6 @@ process.on("SIGTERM", () => {
   }
   process.exit(1);
 });
-
 
 // test SIGTERM (server nijei cntl+c diye close korle server initialize hobe msg dekhte pabo temne hut kore bondho korleo msg dekhte pabo tokhon gracefully process gula off korbo rather than shutting the server instant without any err)
 
