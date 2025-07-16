@@ -1,9 +1,8 @@
-import express, { NextFunction, Request, Response } from "express";
+import express, { Request, Response } from "express";
 import cors from "cors";
 import { router } from "./routes";
-import httpStatus from "http-status-codes";
-import { envVars } from "./config/env";
 import { globalErrorHandler } from "./middlewares/globalErrorHandler";
+import { notFound } from "./middlewares/notFound";
 // route matching app.ts > router.ts > userRoute --> controller --> service --> model --> DB
 
 export const app = express();
@@ -16,7 +15,6 @@ app.use("/api/v1", router);
 // for user route -> go to userRoutes
 // app.use("/api/v1/user", userRoutes);
 // app.use("/api/v1/tour", tourRoutes);
-// app.use("/api/v1/reg", regRoutes);
 
 // root route
 app.get("/", (req: Request, res: Response) => {
@@ -42,12 +40,12 @@ app.use(globalErrorHandler);
 
 
 // not found route
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-app.use((req: Request, res: Response, next: NextFunction) => {
-  res.status(httpStatus.NOT_FOUND).json({
-    success: false,
-    message: "Route not found",
-  });
-});
+app.use(notFound);
+// app.use((req: Request, res: Response, next: NextFunction) => {
+//   res.status(httpStatus.NOT_FOUND).json({
+//     success: false,
+//     message: "Route not found",
+//   });
+// });
 
 export default app;

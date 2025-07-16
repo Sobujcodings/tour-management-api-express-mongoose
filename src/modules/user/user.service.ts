@@ -5,12 +5,32 @@ import { User } from "./user.model";
 // it might have multiple service, so wrap it in a obj
 
 export const createUser = async (payload: Partial<Iuser>) => {
-//   console.log("reqbody", payload);
+  // console.log("reqbody", payload);
   const { name, email } = payload;
   const user = await User.create({ name, email });
+
   return user;
 };
 
+
+// Get user API
+export const getUser = async () => {
+  const user = User.find({});
+
+  // for meta data
+  const totalUsers = await User.countDocuments();
+  
+  return {
+    data: user,
+    meta: {
+      total: totalUsers,
+    },
+  };
+};
+
+
+// export
 export const UserServices = {
   createUser,
+  getUser,
 };
