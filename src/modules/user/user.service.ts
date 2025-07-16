@@ -15,7 +15,7 @@ export const createUser = async (payload: Partial<Iuser>) => {
 
 // Get user API
 export const getUser = async () => {
-  const user = User.find({});
+  const user = await User.find({});
 
   // for meta data
   const totalUsers = await User.countDocuments();

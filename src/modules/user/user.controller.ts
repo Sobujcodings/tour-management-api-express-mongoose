@@ -29,18 +29,20 @@ const createdUser = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
+
 // get all users (using the promise resolve it does not need try catch anymore)
 const getUser = catchAsync(
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async (req: Request, res: Response, next: NextFunction) => {
-    const users = await UserServices.getUser();
+    const result = await UserServices.getUser();
+    console.log("result", result);
 
     sendResponse(res, {
       success: true,
       statusCode: httpStatus.ACCEPTED,
       message: "User retrieved Successfully",
-      data: users,
-      meta: users.meta,
+      data: result.data,
+      meta: result.meta,
     });
     // ai jinish takeo dynamic resuable kore felbo utils funcion likhe bar bar na kore.
     // res.status(200).json({

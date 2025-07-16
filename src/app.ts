@@ -40,6 +40,8 @@ app.use(globalErrorHandler);
 
 
 // not found route
+
+
 app.use(notFound);
 // app.use((req: Request, res: Response, next: NextFunction) => {
 //   res.status(httpStatus.NOT_FOUND).json({
