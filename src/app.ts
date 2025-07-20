@@ -25,6 +25,7 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 
+
 // global error handler (4 varaibles -> check error)
 app.use(globalErrorHandler);
 // app.use((err: any, req: Request, res: Response, next: NextFunction) => {
@@ -40,7 +41,6 @@ app.use(globalErrorHandler);
 
 
 // not found route
-
 
 app.use(notFound);
 // app.use((req: Request, res: Response, next: NextFunction) => {

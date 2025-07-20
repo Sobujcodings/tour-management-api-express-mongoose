@@ -9,6 +9,7 @@ import { catchAsync } from "../../utils/catchAsync";
 import { sendResponse } from "../../utils/sendResponse";
 import httpStatus from "http-status-codes";
 
+
 const createdUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const users = await UserServices.createUser(req.body);
@@ -52,6 +53,12 @@ const getUser = catchAsync(
   }
 );
 
+export const UserControllers = {
+  createdUser,
+  getUser,
+};
+
+
 // const getUser = async (req: Request, res: Response, next: NextFunction) => {
 //   try {
 //     const users = await UserServices.getUser();
@@ -68,7 +75,4 @@ const getUser = catchAsync(
 //   }
 // };
 
-export const UserControllers = {
-  createdUser,
-  getUser,
-};
+

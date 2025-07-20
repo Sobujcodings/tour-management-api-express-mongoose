@@ -9,7 +9,7 @@ export enum Role {
 }
 
 export interface IAuthProvider {
-  provider: string;
+  provider: 'goggle' | 'credentials';
   providerId: string;
 }
 
@@ -22,7 +22,7 @@ export enum IsActive {
 export interface Iuser {
   name : string;
   email : string;
-  password?: string;
+  password : string;
   phone?: string;
   picture?: string;
   adress?: string;
